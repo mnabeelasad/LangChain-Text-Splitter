@@ -1,0 +1,34 @@
+from langchain_experimental.text_splitter import SemanticChunker
+from langchain_openai import OpenAIEmbeddings
+from dotenv import load_dotenv
+
+load_dotenv()   
+
+text_splitter = SemanticChunker(
+        OpenAIEmbeddings(), breakpoint_threshold_type="standard_deviation",
+        breakpoint_threshold_amount=2
+)
+
+sample = """One of the most important things I didn't understand about the world
+when I was a child is the degree to which the returns for performance are superlinear
+Teachers and coaches implicitly told us the returns were linear.
+"You get out," I heard a thousand times, "what you put in." They meant well, but this is rarely true. 
+If your product is only half as good as your competitor's, you don't get half as many customers. 
+You get no customers, and you go out of business.
+It's obviously true that the returns for performance are superlinear in business. 
+Some think this is a flaw of capitalism, and that if we changed the rules it would stop being true.
+But superlinear returns for performance are a feature of the world, not an artifact of rules we've invented.
+
+
+We see the same pattern in fame, power, military victories, knowledge, and even benefit to humanity. In all of these, the rich get richer. [1]
+You can't understand the world without understanding the concept of superlinear returns. 
+And if you're ambitious you definitely should, because this will be the wave you surf on.
+It may seem as if there are a lot of different situations with superlinear returns, 
+but as far as I can tell they reduce to two fundamental causes: exponential growth and thresholds.
+"""
+
+
+docs = text_splitter.create_documents([sample])
+
+print(len(docs))
+print(docs)
